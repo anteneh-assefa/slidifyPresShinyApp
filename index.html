@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Degree fahrenheit to celcius convertor</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Degree fahrenheit to celcius convertor">
+  <meta name="author" content="Anteneh">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <aside class="gdbar">
+    <img src="assets/img/logo.png">
+  </aside>
+  <hgroup class="auto-fadein">
+    <h1>Degree fahrenheit to celcius convertor</h1>
+    <h2>A simple application using shiny</h2>
+    <p>Anteneh<br/>aa</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Background</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Mathimatical relationship between celcius and fahrenheit</h3>
+
+<ul>
+<li>The general equation is:</li>
+</ul>
+
+<p>\[
+^{0}C = (^{0}F - 32)/1.8
+\]</p>
+
+<p>r code:</p>
+
+<pre><code class="r">oF = 32
+oC = round((oF - 32)/1.8, 0)
+</code></pre>
+
+<ul>
+<li><p>32 degree fahrenheit equal to 0 degree celcius</p></li>
+<li><p>98 degree fahrenheit equal to 37 degree celcius</p></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>Exploring ui.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(shiny)
+shinyUI(pageWithSidebar(
+    headerPanel(&quot;Fahrenheit to Celsius convertor&quot;),
+    sidebarPanel(
+        paste(&quot;This program convertes a temprature in degree Farenheit to degree Celcius. Please enter a temprature, select unit and press &#39;convert&#39;. The result will be displayed in the right side panel.&quot;),
+        numericInput(
+            &quot;obs&quot;, h3(&quot;Enter temprature to convert:&quot;), 0),
+        selectInput(
+            &quot;unit&quot;, h3(&quot;Unit&quot;),
+            choices = c(paste(&#39;oF&#39;))),
+        submitButton(&quot;convert&quot;)),
+    mainPanel(
+        img(src=&quot;logo.png&quot;),
+        h4(&quot;You entered:&quot;),
+        verbatimTextOutput(&quot;obs&quot;),
+        h4(&quot;which is equivalent to:&quot;),
+        verbatimTextOutput(&quot;evaluated&quot;))
+))
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>Exploring server.R</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code class="r">library(shiny)
+
+oC &lt;- function(obs) (obs-32) / 1.8
+
+shinyServer(function(input, output) {
+
+    output$obs &lt;- renderText({paste(round(input$obs,0),&quot;degree fahrenheit&quot;)})
+    output$evaluated &lt;- renderText({paste(round(oC(input$obs),0),&quot;degree celsius&quot;)})
+})
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>How to use the application</h2>
+  </hgroup>
+  <article data-timings="">
+    <h3>Steps:</h3>
+
+<ol>
+<li>Provide a temprature (in degree fahranheit)</li>
+<li>Choose a unit (this application resitricted to farenheit to celcius conversion)</li>
+<li>Press the &#39;convert&#39; button</li>
+<li>A summary of the temprature you entered and the temprature in degree celcius will be displayed in the right side panel</li>
+</ol>
+
+<h3>Thank you!</h3>
+
+<h3>Questions?</h3>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Background'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='Exploring ui.R'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='Exploring server.R'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='How to use the application'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
